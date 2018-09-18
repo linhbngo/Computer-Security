@@ -4,19 +4,13 @@
 int x = 100;
 int main()
 {
-  // data stored on stack
   int   a=2;
   double b=2.5;
   int   c=4;
   static int y;
-
-  // allocate memory on heap
-  int *ptr = (int *) malloc(2*sizeof(int));
-  
-  // values 5 and 6 stored on heap
+  int *ptr = (int *) malloc(2*sizeof(int));  
   ptr[0]=5;
   ptr[1]=6;
-
 
   printf ("x is %d and is stored at %p\n", x, &x);
   printf ("a is %d and is stored at %p\n", a, &a);
