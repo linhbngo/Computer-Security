@@ -8,7 +8,7 @@
 int foo(char *str)
 {
     char buffer[100];
-
+    printf ("I am here");
     /* The following statement has a buffer overflow problem */ 
     strcpy(buffer, str);
 
