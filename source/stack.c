@@ -1,15 +1,13 @@
 /* stack.c */
-/* This program has a buffer overflow vulnerability. */
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
-int foo(char *str)
+int vul_func(char *str)
 {
-    char buffer[100];
-    printf ("I am here");
-    /* The following statement has a buffer overflow problem */ 
+    char buffer[50];
+
+    /* The following statement has a buffer overflow problem */
     strcpy(buffer, str);
 
     return 1;
@@ -17,12 +15,19 @@ int foo(char *str)
 
 int main(int argc, char **argv)
 {
-    char str[400];
+    char str[240];
     FILE *badfile;
 
     badfile = fopen("badfile", "r");
-    fread(str, sizeof(char), 300, badfile);
-    foo(str);
+    fread(str, sizeof(char), 200, badfile);
+    
+    char *shell = (char *) getenv("MYSHELL");
+    if (shell) {
+      printf ("Value: %s\n", shell);
+      printf ("Address: %x\n", (unsigned int)shell); 
+    }
+    
+    vul_func(str);
 
     printf("Returned Properly\n");
     return 1;
