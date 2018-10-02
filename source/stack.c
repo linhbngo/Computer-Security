@@ -21,12 +21,6 @@ int main(int argc, char **argv)
     badfile = fopen("badfile", "r");
     fread(str, sizeof(char), 200, badfile);
     
-    char *shell = (char *) getenv("MYSHELL");
-    if (shell) {
-      printf ("Value: %s\n", shell);
-      printf ("Address: %x\n", (unsigned int)shell); 
-    }
-    
     vul_func(str);
 
     printf("Returned Properly\n");
