@@ -1,0 +1,57 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "ubuntu/trusty32"
+  config.vm.boot_timeout = 600
+  config.vm.network :forwarded_port, guest: 8888, host: 8900
+  config.vm.box_check_update = false
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "768"
+  end
+
+  cache = ENV['apt_cache'] || ""
+
+  config.vm.provision "shell", privileged: false, inline: <<-SHELL
+     sudo http_proxy=#{cache} apt-get update
+     sudo http_proxy=#{cache} apt-get install -y --no-install-recommends build-essential mercurial python-lxml python-setuptools libffi-dev python-pip python-dev libzmq3-dev graphviz libssl-dev python-zmq python-kerberos git libxml2-dev python-ipaddr python-requests libxslt1-dev zlib1g-dev
+     sudo pip install setuptools==33.1.1 graphviz functools32 jupyter tornado
+
+     ## Jupyter nbextensions
+     sudo pip install six --upgrade
+     sudo pip install jupyter_contrib_nbextensions
+     sudo jupyter contrib nbextension install
+     jupyter nbextension enable hide_input/main
+     jupyter nbextension enable collapsible_headings/main
+
+     ## geni-lib install
+     hg clone http://bitbucket.org/barnstorm/geni-lib
+     cd geni-lib
+     hg update -C 0.9-DEV
+     sudo pip install .
+
+     ## geni-lib setup
+     if [ -f /vagrant/omni.bundle ]
+        then
+          echo "/vagrant/omni.bundle exists. Configuring geni-lib."
+          PARMS=(--bundle /vagrant/omni.bundle)
+          if [ -f /vagrant/cert.key ]
+             then
+                PARMS+=(--cert-private-key /vagrant/cert.key)
+          fi
+          if [ -f /vagrant/ssh.pubkey ]
+             then
+                PARMS+=(--pubkey /vagrant/ssh.pubkey)
+          fi
+          sudo -u vagrant /usr/local/bin/context-from-bundle "${PARMS[@]}"
+     fi
+     mkdir -p ~/notebooks
+     mkdir -p ~/.ipython/extensions
+     cp tools/ipython/genish.py ~/.ipython/extensions
+     sudo cp support/jupyter-upstart /etc/init/jupyter.conf
+     cp "support/Getting Started.ipynb" ~/notebooks/
+     sudo start jupyter
+  SHELL
+
+end

@@ -1,0 +1,6 @@
+repo: 2e62a9934e6b9941174c71d14c81b8b0bb4be698
+node: 1baf79cf12cb0d3cae4da481cb35030b5e615000
+branch: 0.9-EMULAB
+latesttag: null
+latesttagdistance: 907
+changessincelatesttag: 1254
