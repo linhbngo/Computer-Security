@@ -5,7 +5,7 @@
 
 int vul_func(char *str)
 {
-    char buffer[50];
+    char buffer[100];
 
     /* The following statement has a buffer overflow problem */
     strcpy(buffer, str);
@@ -15,7 +15,7 @@ int vul_func(char *str)
 
 int main(int argc, char **argv)
 {
-    char str[240];
+    char str[400];
     FILE *badfile;
 
     badfile = fopen("badfile", "r");
