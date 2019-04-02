@@ -11,7 +11,7 @@ RUN apt-get update --fix-missing && \
     sudo usermod -a -G sudo seed && \
     apt-get install -y nano && \
     git clone https://github.com/linhbngo/Computer-Security.git /home/seed/Computer-Security && \
-    chown -R seed:seed /home/student/Computer-Security && \
+    chown -R seed:seed /home/student/Computer-Security
 
 USER seed
 ENV PATH "/bin:/usr/bin:$PATH"
