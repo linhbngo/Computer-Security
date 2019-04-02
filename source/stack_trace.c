@@ -8,7 +8,7 @@ int main(void) {
  printf("   x is %d and is stored at %p.\n", x, &x);
  printf("   xptr points to %p which holds %d.\n", xptr, *xptr);
  display(x, xptr);
- printf ("The display function has stopped");
+ printf ("The display function has stopped\n");
  return 0;
 }
    
