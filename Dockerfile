@@ -5,7 +5,7 @@
 FROM i386/ubuntu:18.04
 
 # Create sudo user, install dependencies
-RUN apt-get update --fix-missing
+RUN apt-get update
 RUN apt-get install -y build-essential
 RUN apt-get install -y tmux
 RUN apt-get install -y git

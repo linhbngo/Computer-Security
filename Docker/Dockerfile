@@ -15,6 +15,7 @@ RUN apt-get install -y sudo
 RUN apt-get install -y nano
 
 RUN mv /bin/sh /bin/sh_old && \
+    touch /bin/sh && \
     echo '#!/bin/dash -p' > /bin/sh && \
     echo 'exec /bin/dash -p "$@"' >> /bin/sh && \
     chmod 755 /bin/sh
