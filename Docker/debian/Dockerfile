@@ -14,12 +14,6 @@ RUN apt-get install -y wget
 RUN apt-get install -y sudo
 RUN apt-get install -y nano
 
-RUN mv /bin/sh /bin/sh_old && \
-    touch /bin/sh && \
-    echo '#!/bin/dash -p' > /bin/sh && \
-    echo 'exec /bin/dash -p "$@"' >> /bin/sh && \
-    chmod 755 /bin/sh
-
 RUN useradd -m -p WchOyJRR.1Qrc -s /bin/bash seed && \
     usermod -a -G sudo seed
 
