@@ -20,6 +20,8 @@ RUN useradd -m -p WchOyJRR.1Qrc -s /bin/bash seed && \
 RUN git clone https://github.com/linhbngo/Computer-Security.git /home/seed/Computer-Security && \
     chown -R seed:seed /home/seed/Computer-Security
 
+RUN sudo sed -i 's/Defaults env_reset/Defaults  env_reset,timestamp_timeout=0/' /etc/sudoers
+
 USER seed
 ENV PATH "/bin:/usr/bin:$PATH"
 WORKDIR "/home/seed"
